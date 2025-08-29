@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#print your name
+echo 'Mohamed'
+
+#create folder titled with your name
+mkdir Mohamed
+
+#make another directory titled 'biocomputing' and change to that directory with one command line
+mkdir biocomputing && cd biocomputing
+
+#download 3 files:
+touch files.txt
+
+echo "https://raw.githubusercontent.com/josoga2/dataset-repos/main/wildtype.fna" >> files.txt 
+echo 'https://raw.githubusercontent.com/josoga2/dataset-repos/main/wildtype.gbk' >> files.txt
+echo 'https://raw.githubusercontent.com/josoga2/dataset-repos/main/wildtype.gbk' >> files.txt
+wget -i files.txt
+
+#we finished step 4 and should start again at step 5!;
+
+#move the fna files
+mv *.fna ../Mohamed
+
+#delete the duplicate gbk fil
+rm *.gbk.*
+
+#confirm is fna is mutant or wild
+cd ../
+mutant_grep=$(grep -i 'tatatata' Mohamed/wildtype.fna)
+if [[ $mutant_grep == "" ]];then
+	echo 'this strain is a wildtype strain with no mutation in the tata box!'
+	#grep -i 'tatatata' Mohamed/wildtype.fna
+else
+	echo 'this strain is a mutant with a mutation in the tata box'
+	#echo $mutant_grep
+	echo $mutant_grep| tr ' ' '\n' >Mohamed/mutant_lines.txt
+fi
+
+# count the number of lines in the gbk file:
+lines_with_header=$(wc -l biocomputing/wildtype.gbk | awk '{print $1}')
+Lines=$((lines_with_header - 1))
+echo 'There are' $Lines 'lines in the gbk file'
+
+#print the source of the organism
+source_org=$(grep 'SOURCE' biocomputing/wildtype.gbk | awk '{print $2, $3}')
+
+#print the size of the sequence
+seq_len=$(grep 'LOCUS' biocomputing/wildtype.gbk | awk '{print $3}')
+
+#List all the gene names:
+gene_list=$(grep '/gene=' biocomputing/wildtype.gbk | sed 's/\/gene\=/ /')
+
+echo 'our genome is' $seq_len 'bp long'
+echo 'our genome is for' $source_org
+echo 'all gene in this genome include:' $'\n' $gene_list
+
+#clear terminal
+reset
+
+#list files in two folders
+ls Mohamed/ biocomputing/
