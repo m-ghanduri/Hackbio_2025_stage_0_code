@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#activate base conda
+conda activate
+
+#create conda environment named 'funtools'
+conda create --name 'funtools'
+#pressed y then enter
+
+#activate funtools
+conda activate funtools
+
+#install figlet
+conda install tsnyder::figlet 
+
+#run figlet 'your name'
+figlet Mohamed
+
+#install all packages using conda using bioconda channel
+conda install -c bioconda bwa blast samtools bedtools spades bcftools fastp multiqc
