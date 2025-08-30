@@ -30,10 +30,8 @@ cd ../
 mutant_grep=$(grep -i 'tatatata' Mohamed/wildtype.fna)
 if [[ $mutant_grep == "" ]];then
 	echo 'this strain is a wildtype strain with no mutation in the tata box!'
-	#grep -i 'tatatata' Mohamed/wildtype.fna
 else
 	echo 'this strain is a mutant with a mutation in the tata box'
-	#echo $mutant_grep
 	echo $mutant_grep| tr ' ' '\n' >Mohamed/mutant_lines.txt
 fi
 
@@ -56,7 +54,7 @@ echo 'our genome is for' $source_org
 echo 'all gene in this genome include:' $'\n' $gene_list
 
 #clear terminal
-$echo reset
+clear
 
 #list files in two folders
 ls Mohamed/ biocomputing/
