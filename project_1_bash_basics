@@ -56,7 +56,7 @@ echo 'our genome is for' $source_org
 echo 'all gene in this genome include:' $'\n' $gene_list
 
 #clear terminal
-reset
+$echo reset
 
 #list files in two folders
 ls Mohamed/ biocomputing/
